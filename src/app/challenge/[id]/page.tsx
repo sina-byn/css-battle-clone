@@ -5,6 +5,7 @@ import HtmlContextProvider from '@/context/HtmlContextProvider';
 import Image from '@/components/Image';
 import Iframe from '@/components/Iframe';
 import Editor from '@/components/Editor';
+import SubmitButton from '@/app/SubmitButton';
 import CompareSlider from '@/components/CompareSlider';
 
 // * types
@@ -22,6 +23,7 @@ const Challenge = ({ params: { id } }: PageProps) => {
         <CompareSlider items={[<Iframe key='iframe' />, <Image id={id} key='image' />]} />
         <div>
           <Image id={id} className='base' />
+          <SubmitButton />
         </div>
       </HtmlContextProvider>
     </main>
