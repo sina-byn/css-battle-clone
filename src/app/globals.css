@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  height: 100vh;
+  height: 100svh;
+  background: #1e1e1e;
+  color: #e7e7e7;
+}
+
+@layer components {
+  .box {
+    @apply relative w-[400px] aspect-[4/3] after:content-['400x300'] after:absolute after:top-full after:right-0 after:text-sm after:text-gray-500 after:font-medium;
+  }
+}
