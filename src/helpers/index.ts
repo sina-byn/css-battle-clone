@@ -1,4 +1,5 @@
 import { promisify } from 'util';
+import puppeteer from 'puppeteer';
 import getPixels from 'get-pixels';
 
 const readPixels = async (imagePath: string) => {
@@ -20,4 +21,28 @@ const meanSquaredError = (a: Uint8Array, b: Uint8Array) => {
   return parseFloat(errorPercent.toFixed(2));
 };
 
-export { meanSquaredError, readPixels };
+const takeScreenshot = async (id: string, html: string, ...selectors: string[]) => {
+  try {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    const url = [process.env.PUBLIC_URL, 'screenshot', id].join('/');
+
+    if (!url) {
+      throw Error('invalid url - make sure to set the PUBLIC_URL env properly');
+    }
+
+    await page.goto(url);
+    await page.$eval('iframe', (e, html) => e.setAttribute('srcdoc', html), html);
+
+    for (const selector of selectors) {
+      const element = await page.$(`.${selector}`);
+      await element?.screenshot({ path: `public/${selector}.png`, type: 'png' });
+    }
+
+    browser.close();
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export { takeScreenshot, meanSquaredError, readPixels };
