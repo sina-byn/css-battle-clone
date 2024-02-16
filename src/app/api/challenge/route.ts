@@ -17,6 +17,8 @@ export const POST = async (req: NextRequest) => {
 
   if (id === null) return Response.json(errorResponse);
 
+  console.log('here');
+
   await takeScreenshot(id, html, 'base', 'output');
 
   try {
