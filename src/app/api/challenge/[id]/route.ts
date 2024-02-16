@@ -1,5 +1,9 @@
 import { type NextRequest } from 'next/server';
 
+// * helpers
+import { readPixels, takeScreenshot, meanSquaredError } from '@/helpers';
+import wrapHtml from '@/helpers/wrapHtml';
+
 // * types
 type RequestBody = { html: string };
 
@@ -9,6 +13,21 @@ export const POST = async (req: NextRequest) => {
 
   const errorResponse = { ok: false, status: 500 };
   const body: RequestBody = await req.json();
+  const html = wrapHtml(body.html);
 
-  if (!id) return Response.json(errorResponse);
+  if (id === null) return Response.json(errorResponse);
+
+  await takeScreenshot(id, html, 'base', 'output');
+
+  try {
+    const basePixels = await readPixels('public/base.png');
+    const outputPixels = await readPixels('public/output.png');
+    const similarityPercent = meanSquaredError(outputPixels, basePixels);
+
+    return Response.json({ ok: true, status: 200, data: { similarity: similarityPercent } });
+  } catch (err) {
+    console.error(err);
+  }
+
+  Response.json(errorResponse);
 };
