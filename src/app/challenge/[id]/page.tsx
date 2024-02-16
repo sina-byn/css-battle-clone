@@ -5,7 +5,7 @@ import HtmlContextProvider from '@/context/HtmlContextProvider';
 import Image from '@/components/Image';
 import Iframe from '@/components/Iframe';
 import Editor from '@/components/Editor';
-import SubmitButton from '@/app/SubmitButton';
+import SubmitButton from '@/components/SubmitButton';
 import CompareSlider from '@/components/CompareSlider';
 
 // * types
