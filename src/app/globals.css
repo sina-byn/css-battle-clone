@@ -9,6 +9,14 @@ body {
   color: #e7e7e7;
 }
 
+.__rcs-handle-button {
+  display: none !important;
+}
+
+.compare-slider.no-handle button:last-child {
+  display: none !important;
+}
+
 @layer components {
   .box {
     @apply relative w-[400px] aspect-[4/3] after:content-['400x300'] after:absolute after:top-full after:right-0 after:text-sm after:text-gray-500 after:font-medium;
